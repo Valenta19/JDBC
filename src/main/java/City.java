@@ -1,5 +1,5 @@
 public class City {
-     private String id_city;
+    private String id_city;
     private String city_name;
 
     public City(String id_city, String city_name) {
@@ -23,4 +23,3 @@ public class City {
         this.city_name = city_name;
     }
 }
-
