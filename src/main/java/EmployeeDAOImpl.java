@@ -1,3 +1,5 @@
+import org.hibernate.Transaction;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -10,7 +12,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        String jpqlQuery = "SELECT E FROM Employee E";
+        String jpqlQuery = "SELECT e FROM Employee e";
         TypedQuery<Employee> query = entityManager.createQuery(jpqlQuery, Employee.class);
         List<Employee> employees = query.getResultList();
         entityManager.getTransaction().commit();
@@ -33,37 +35,44 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         return entityManager.find(Employee.class, id);
+
     }
 
     @Override
     public void createEmployee(Employee employee) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Transaction transaction = (Transaction) entityManager.getTransaction();
         entityManager.getTransaction().begin();
-        entityManager.persist(employee);
-        entityManager.getTransaction().commit();
-
+        entityManager.merge(employee);
+        transaction.commit();
+        entityManager.close();
+        entityManagerFactory.close();
     }
 
     @Override
     public void updateEmployee(Employee employee) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Transaction transaction = (Transaction) entityManager.getTransaction();
         entityManager.getTransaction().begin();
         entityManager.merge(employee);
-        entityManager.getTransaction().commit();
+        transaction.commit();
+        entityManager.close();
+        entityManagerFactory.close();
     }
 
     @Override
     public void deleteEmployee(Employee employee) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-
+        Transaction transaction = (Transaction) entityManager.getTransaction();
         entityManager.getTransaction().begin();
         entityManager.merge(employee);
         entityManager.remove(employee);
-        entityManager.getTransaction().commit();
-        System.out.println(" сотрудник " + employee.getId() + "удален");
+        transaction.commit();
+        entityManager.close();
+        entityManagerFactory.close();
     }
 
 }
