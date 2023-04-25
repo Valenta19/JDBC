@@ -11,11 +11,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> getAllEmployee() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Transaction transaction = (Transaction) entityManager.getTransaction();
         entityManager.getTransaction().begin();
         String jpqlQuery = "SELECT e FROM Employee e";
         TypedQuery<Employee> query = entityManager.createQuery(jpqlQuery, Employee.class);
         List<Employee> employees = query.getResultList();
-        entityManager.getTransaction().commit();
         for (Employee employee : employees) {
             System.out.println("ID работника: " + employee.getId());
             System.out.println("Имя работника: " + employee.getFirstName());
@@ -25,8 +25,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             System.out.println("номер города: " + employee.getCityId());
             System.out.println(" ");
         }
-        entityManager.close();
-        entityManagerFactory.close();
+        transaction.commit();
         return employees;
     }
 
@@ -35,7 +34,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         return entityManager.find(Employee.class, id);
-
     }
 
     @Override
@@ -46,8 +44,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         entityManager.getTransaction().begin();
         entityManager.merge(employee);
         transaction.commit();
-        entityManager.close();
-        entityManagerFactory.close();
     }
 
     @Override
@@ -58,8 +54,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         entityManager.getTransaction().begin();
         entityManager.merge(employee);
         transaction.commit();
-        entityManager.close();
-        entityManagerFactory.close();
     }
 
     @Override
@@ -71,8 +65,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         entityManager.merge(employee);
         entityManager.remove(employee);
         transaction.commit();
-        entityManager.close();
-        entityManagerFactory.close();
     }
 
 }
