@@ -1,61 +1,49 @@
-public class Employee {
-    int id;
-    private String firs_name;
-    private String last_name;
-    private String gender;
-    private int age;
-    private int id_city;
+import javax.persistence.*;
 
-    public Employee(int id, String firs_name, String last_name, String gender, int age, int id_city) {
-        this.id = id;
-        this.firs_name = firs_name;
-        this.last_name = last_name;
-        this.gender = gender;
-        this.age = age;
-        this.id_city = id_city;
+@Entity
+@Table(name = "employee")
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "gender")
+    private String gender;
+    @Column(name = "age")
+    private int age;
+    @Column(name = "city_id")
+    private int cityId;
+
+    public Employee() {
+
     }
 
-    @Override
-    public String toString() {
-        return
-                "ID работника: " + id +
-                        ", Имя: " + firs_name +
-                        ", Фамилия: " + last_name +
-                        ", пол: " + gender +
-                        ", Возраст: " + age +
-                        ", номер города: " + id_city;
+    public Employee(String firstName, String lastName, String gender, int age, int cityId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.age = age;
+        this.cityId = cityId;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getFirs_name() {
-        return firs_name;
-    }
-
-    public void setFirs_name(String firs_name) {
-        this.firs_name = firs_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getGender() {
         return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public int getAge() {
@@ -66,11 +54,20 @@ public class Employee {
         this.age = age;
     }
 
-    public int getId_city() {
-        return id_city;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setId_city(int id_city) {
-        this.id_city = id_city;
+
+    @Override
+    public String toString() {
+        return "Сотрудник " +
+                "id= " + id +
+                ", Имя= " + firstName +
+                ", Фамилия= " + lastName + '\'' +
+                ", пол= " + gender + '\'' +
+                ", возраст= " + age +
+                ", номер города= " + cityId;
     }
 }
+
