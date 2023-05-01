@@ -1,25 +1,57 @@
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "city")
 public class City {
-    private String id_city;
-    private String city_name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_city", insertable = false, updatable = false)
+    private String idCity;
+    @Column(name = "city_name")
+    private String cityName;
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
+    private List<Employee> employees;
 
-    public City(String id_city, String city_name) {
-        this.id_city = id_city;
-        this.city_name = city_name;
+    public City(String idCity, String cityName) {
+        this.idCity = idCity;
+        this.cityName = cityName;
     }
 
-    public String getId_city() {
-        return id_city;
+    public City() {
+
     }
 
-    public void setId_city(String id_city) {
-        this.id_city = id_city;
+    public String getIdCity() {
+        return idCity;
     }
 
-    public String getCity_name() {
-        return city_name;
+    public void setIdCity(String idCity) {
+        this.idCity = idCity;
     }
 
-    public void setCity_name(String city_name) {
-        this.city_name = city_name;
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "idCity='" + idCity + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", employees=" + employees +
+                '}';
     }
 }

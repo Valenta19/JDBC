@@ -4,58 +4,52 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class EmployeeDAOImpl implements EmployeeDAO {
+public class CityDAOImpl implements CityDAO {
     @Override
-    public List<Employee> getAllEmployee() {
+    public List<City> getAllCity() {
         EntityManager entityManager = createEntityManager();
+
         entityManager.getTransaction().begin();
-        String jpqlQuery = "SELECT e FROM Employee e";
-        TypedQuery<Employee> query = entityManager.createQuery(jpqlQuery, Employee.class);
-        List<Employee> employees = query.getResultList();
+        String jpqlQuery = "SELECT Q FROM City q";
+        TypedQuery<City> query = entityManager.createQuery(jpqlQuery, City.class);
+        List<City> cities = query.getResultList();
         entityManager.getTransaction().commit();
-        for (Employee employee : employees) {
-            System.out.println(" ID: " + employee.getId());
-            System.out.println(" firstName: " + employee.getFirstName());
-            System.out.println(" lastName: " + employee.getLastName());
-            System.out.println(" age: " + employee.getAge());
-            System.out.println(" gender: " + employee.getGender());
-        }
 
-        return employees;
+        return cities;
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
+    public City getCityById(int id) {
         EntityManager entityManager = createEntityManager();
 
-        return entityManager.find(Employee.class, id);
-
+        return entityManager.find(City.class, id);
     }
 
     @Override
-    public void createEmployee(Employee employee) {
+    public void createCity(City city) {
         EntityManager entityManager = createEntityManager();
 
         entityManager.getTransaction().begin();
-        entityManager.persist(employee);
+        entityManager.persist(city);
         entityManager.getTransaction().commit();
     }
 
     @Override
-    public void updateEmployee(Employee employee) {
+    public void updateCity(City city) {
         EntityManager entityManager = createEntityManager();
 
         entityManager.getTransaction().begin();
-        entityManager.merge(employee);
+        entityManager.merge(city);
         entityManager.getTransaction().commit();
+
     }
 
     @Override
-    public void deleteEmployee(Employee employee) {
+    public void deleteCity(City city) {
         EntityManager entityManager = createEntityManager();
 
         entityManager.getTransaction().begin();
-        entityManager.remove(employee);
+        entityManager.remove(city);
         entityManager.getTransaction().commit();
     }
 
