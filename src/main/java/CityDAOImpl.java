@@ -8,9 +8,8 @@ public class CityDAOImpl implements CityDAO {
     @Override
     public List<City> getAllCity() {
         EntityManager entityManager = createEntityManager();
-
         entityManager.getTransaction().begin();
-        String jpqlQuery = "SELECT Q FROM City q";
+        String jpqlQuery = " FROM City";
         TypedQuery<City> query = entityManager.createQuery(jpqlQuery, City.class);
         List<City> cities = query.getResultList();
         entityManager.getTransaction().commit();
@@ -31,13 +30,13 @@ public class CityDAOImpl implements CityDAO {
 
         entityManager.getTransaction().begin();
         entityManager.persist(city);
+        entityManager.merge(city);
         entityManager.getTransaction().commit();
     }
 
     @Override
     public void updateCity(City city) {
         EntityManager entityManager = createEntityManager();
-
         entityManager.getTransaction().begin();
         entityManager.merge(city);
         entityManager.getTransaction().commit();
@@ -47,8 +46,8 @@ public class CityDAOImpl implements CityDAO {
     @Override
     public void deleteCity(City city) {
         EntityManager entityManager = createEntityManager();
-
         entityManager.getTransaction().begin();
+        entityManager.merge(city);
         entityManager.remove(city);
         entityManager.getTransaction().commit();
     }

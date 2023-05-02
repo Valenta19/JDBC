@@ -13,14 +13,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         TypedQuery<Employee> query = entityManager.createQuery(jpqlQuery, Employee.class);
         List<Employee> employees = query.getResultList();
         entityManager.getTransaction().commit();
-        for (Employee employee : employees) {
-            System.out.println(" ID: " + employee.getId());
-            System.out.println(" firstName: " + employee.getFirstName());
-            System.out.println(" lastName: " + employee.getLastName());
-            System.out.println(" age: " + employee.getAge());
-            System.out.println(" gender: " + employee.getGender());
-        }
-
         return employees;
     }
 

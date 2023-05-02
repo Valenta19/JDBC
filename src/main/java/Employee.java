@@ -16,8 +16,6 @@ public class Employee {
     private String gender;
     @Column(name = "age")
     private int age;
-    @Column(name = "id_city")
-    private int cityId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_city")
     private City city;
@@ -48,6 +46,7 @@ public class Employee {
         this.firstName = firstName;
     }
 
+
     public String getLastName() {
         return lastName;
     }
@@ -72,13 +71,7 @@ public class Employee {
         this.age = age;
     }
 
-    public int getCityId() {
-        return cityId;
-    }
 
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
-    }
 
     public City getCity() {
         return city;
