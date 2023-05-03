@@ -4,50 +4,50 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class EmployeeDAOImpl implements EmployeeDAO {
+public class CityDAOImpl implements CityDAO {
     @Override
-    public List<Employee> getAllEmployee() {
+    public List<City> getAllCity() {
         EntityManager entityManager = createEntityManager();
         entityManager.getTransaction().begin();
-        String jpqlQuery = " FROM Employee";
-        TypedQuery<Employee> query = entityManager.createQuery(jpqlQuery, Employee.class);
-        List<Employee> employees = query.getResultList();
+        String jpqlQuery = " FROM City";
+        TypedQuery<City> query = entityManager.createQuery(jpqlQuery, City.class);
+        List<City> cities = query.getResultList();
         entityManager.getTransaction().commit();
-        return employees;
+
+        return cities;
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
+    public City getCityById(int id) {
         EntityManager entityManager = createEntityManager();
 
-        return entityManager.find(Employee.class, id);
-
+        return entityManager.find(City.class, id);
     }
 
     @Override
-    public void createEmployee(Employee employee) {
-        EntityManager entityManager = createEntityManager();
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(employee);
-        entityManager.getTransaction().commit();
-    }
-
-    @Override
-    public void updateEmployee(Employee employee) {
+    public void createCity(City city) {
         EntityManager entityManager = createEntityManager();
 
         entityManager.getTransaction().begin();
-        entityManager.merge(employee);
+        entityManager.persist(city);
         entityManager.getTransaction().commit();
     }
 
     @Override
-    public void deleteEmployee(Employee employee) {
+    public void updateCity(City city) {
         EntityManager entityManager = createEntityManager();
-
         entityManager.getTransaction().begin();
-        entityManager.remove(employee);
+        entityManager.merge(city);
+        entityManager.getTransaction().commit();
+
+    }
+
+    @Override
+    public void deleteCity(City city) {
+        EntityManager entityManager = createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(city);
+        entityManager.remove(city);
         entityManager.getTransaction().commit();
     }
 

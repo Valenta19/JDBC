@@ -1,7 +1,8 @@
 import javax.persistence.*;
 
+
 @Entity
-@Table(name = "employee")
+@Table(name = "employeeList")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,35 +16,53 @@ public class Employee {
     private String gender;
     @Column(name = "age")
     private int age;
-    @Column(name = "city_id")
-    private int cityId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_city")
+    private City city;
 
-    public Employee() {
-
-    }
-
-    public Employee(String firstName, String lastName, String gender, int age, int cityId) {
+    public Employee( String firstName, String lastName, String gender, int age, City city) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.age = age;
-        this.cityId = cityId;
+        this.city = city;
+    }
+
+    public Employee() {
+
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
 
     public String getLastName() {
         return lastName;
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getGender() {
         return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public int getAge() {
@@ -54,20 +73,26 @@ public class Employee {
         this.age = age;
     }
 
-    public int getCityId() {
-        return cityId;
+
+
+    public City getCity() {
+        return city;
     }
 
+    public void setCity(City city) {
+        this.city = city;
+    }
 
     @Override
     public String toString() {
-        return "Сотрудник " +
-                "id= " + id +
-                ", Имя= " + firstName +
-                ", Фамилия= " + lastName + '\'' +
-                ", пол= " + gender + '\'' +
-                ", возраст= " + age +
-                ", номер города= " + cityId;
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
+
 
