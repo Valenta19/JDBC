@@ -16,14 +16,16 @@ public class Employee {
     private String gender;
     @Column(name = "age")
     private int age;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_city")
     private City city;
-    public Employee(String firstName, String lastName, String gender, int age) {
+
+    public Employee( String firstName, String lastName, String gender, int age, City city) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.age = age;
+        this.city = city;
     }
 
     public Employee() {

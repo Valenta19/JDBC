@@ -10,8 +10,14 @@ public class City {
     private int idCity;
     @Column(name = "city_name")
     private String cityName;
-    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Employee> employees;
+
+    public City(int idCity, String cityName, List<Employee> employees) {
+        this.idCity = idCity;
+        this.cityName = cityName;
+        this.employees = employees;
+    }
 
     public City(int idCity, String cityName) {
         this.idCity = idCity;

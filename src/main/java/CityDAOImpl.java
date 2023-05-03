@@ -30,7 +30,6 @@ public class CityDAOImpl implements CityDAO {
 
         entityManager.getTransaction().begin();
         entityManager.persist(city);
-        entityManager.merge(city);
         entityManager.getTransaction().commit();
     }
 

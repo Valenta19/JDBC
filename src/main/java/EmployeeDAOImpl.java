@@ -9,7 +9,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> getAllEmployee() {
         EntityManager entityManager = createEntityManager();
         entityManager.getTransaction().begin();
-        String jpqlQuery = "SELECT e FROM Employee e";
+        String jpqlQuery = " FROM Employee";
         TypedQuery<Employee> query = entityManager.createQuery(jpqlQuery, Employee.class);
         List<Employee> employees = query.getResultList();
         entityManager.getTransaction().commit();
